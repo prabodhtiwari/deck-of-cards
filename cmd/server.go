@@ -1,11 +1,12 @@
 package main
 
 import (
-	"github.com/gorilla/mux"
 	"log"
 	"net/http"
 
-	"github.com/deck-of-cards/src/api"
+	"github.com/gorilla/mux"
+
+	"github.com/deck-of-cards/api"
 )
 
 func main() {

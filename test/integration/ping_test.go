@@ -1,11 +1,13 @@
 package integrationtest
 
 import (
-	"github.com/deck-of-cards/src/api"
 	"net/http"
 	"net/http/httptest"
 	"os"
 	"testing"
+
+
+	"github.com/deck-of-cards/api"
 )
 
 func TestMain(m *testing.M) {
