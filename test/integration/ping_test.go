@@ -22,7 +22,6 @@ func TestPing(t *testing.T) {
 	response := httptest.NewRecorder()
 	handler.ServeHTTP(response, req)
 	checkResponseCode(t, http.StatusOK, response.Code)
-
 }
 
 func checkResponseCode(t *testing.T, expected, actual int) {

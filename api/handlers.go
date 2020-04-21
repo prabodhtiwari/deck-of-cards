@@ -18,6 +18,13 @@ type CreateDeckResponse struct {
 	Cards     []*utils.Card `json:"-"`
 }
 
+type OpenDeckResponse struct {
+	DeckID    string        `json:"deck_id"`
+	Shuffled  bool          `json:"shuffled"`
+	Remaining int           `json:"remaining"`
+	Cards     []*utils.Card `json:"cards"`
+}
+
 var Decks = map[string]CreateDeckResponse{}
 
 func Ping(w http.ResponseWriter, r *http.Request) {
@@ -57,6 +64,24 @@ func Create(w http.ResponseWriter, r *http.Request) {
 
 	response := CreateDeckResponse{DeckID: deckID, Shuffled: shuffle, Remaining: len(cards), Cards: utils.GetDisplayableCards(cards)}
 	Decks[deckID] = response
+	err := json.NewEncoder(w).Encode(response)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+	}
+
+}
+
+func Open(w http.ResponseWriter, r *http.Request) {
+	deckID := r.URL.Query().Get("deck_id")
+
+	deck := Decks[deckID]
+
+	if deck.DeckID == "" {
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	response := OpenDeckResponse{DeckID: deck.DeckID, Shuffled: deck.Shuffled, Remaining: deck.Remaining, Cards: deck.Cards}
 	err := json.NewEncoder(w).Encode(response)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
