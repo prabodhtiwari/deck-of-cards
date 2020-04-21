@@ -1,4 +1,4 @@
-package integrationtest
+package handlers
 
 import (
 	"encoding/json"
@@ -6,18 +6,16 @@ import (
 	"net/http/httptest"
 	"strconv"
 	"testing"
-
-	"github.com/deck-of-cards/api"
 )
 
 func TestDrawDeckWithoutCardsWithWrongDeckIdAndCorrectCount(t *testing.T) {
 
 	count := 2
 
-	createDeckRes := new(api.CreateDeckResponse)
+	createDeckRes := new(CreateDeckResponse)
 	createDeckReq, _ := http.NewRequest("GET", "/deck/create", nil)
 
-	handler := http.HandlerFunc(api.Create)
+	handler := http.HandlerFunc(Create)
 	response := httptest.NewRecorder()
 	handler.ServeHTTP(response, createDeckReq)
 	checkResponseCode(t, http.StatusOK, response.Code)
@@ -34,7 +32,7 @@ func TestDrawDeckWithoutCardsWithWrongDeckIdAndCorrectCount(t *testing.T) {
 	drawDeckQuery.Add("count", strconv.Itoa(count))
 	drawDeckReq.URL.RawQuery = drawDeckQuery.Encode()
 
-	handler = http.HandlerFunc(api.Draw)
+	handler = http.HandlerFunc(Draw)
 	response = httptest.NewRecorder()
 	handler.ServeHTTP(response, drawDeckReq)
 	checkResponseCode(t, http.StatusBadRequest, response.Code)
@@ -45,10 +43,10 @@ func TestDrawDeckWithoutCardsWithWrongDeckIdAndWrongCount(t *testing.T) {
 
 	count := 200
 
-	createDeckRes := new(api.CreateDeckResponse)
+	createDeckRes := new(CreateDeckResponse)
 	createDeckReq, _ := http.NewRequest("GET", "/deck/create", nil)
 
-	handler := http.HandlerFunc(api.Create)
+	handler := http.HandlerFunc(Create)
 	response := httptest.NewRecorder()
 	handler.ServeHTTP(response, createDeckReq)
 	checkResponseCode(t, http.StatusOK, response.Code)
@@ -65,7 +63,7 @@ func TestDrawDeckWithoutCardsWithWrongDeckIdAndWrongCount(t *testing.T) {
 	drawDeckQuery.Add("count", strconv.Itoa(count))
 	drawDeckReq.URL.RawQuery = drawDeckQuery.Encode()
 
-	handler = http.HandlerFunc(api.Draw)
+	handler = http.HandlerFunc(Draw)
 	response = httptest.NewRecorder()
 	handler.ServeHTTP(response, drawDeckReq)
 	checkResponseCode(t, http.StatusBadRequest, response.Code)
@@ -76,10 +74,10 @@ func TestDrawDeckWithoutCardsWithWrongDeckIdAndNegativeCount(t *testing.T) {
 
 	count := -2
 
-	createDeckRes := new(api.CreateDeckResponse)
+	createDeckRes := new(CreateDeckResponse)
 	createDeckReq, _ := http.NewRequest("GET", "/deck/create", nil)
 
-	handler := http.HandlerFunc(api.Create)
+	handler := http.HandlerFunc(Create)
 	response := httptest.NewRecorder()
 	handler.ServeHTTP(response, createDeckReq)
 	checkResponseCode(t, http.StatusOK, response.Code)
@@ -96,7 +94,7 @@ func TestDrawDeckWithoutCardsWithWrongDeckIdAndNegativeCount(t *testing.T) {
 	drawDeckQuery.Add("count", strconv.Itoa(count))
 	drawDeckReq.URL.RawQuery = drawDeckQuery.Encode()
 
-	handler = http.HandlerFunc(api.Draw)
+	handler = http.HandlerFunc(Draw)
 	response = httptest.NewRecorder()
 	handler.ServeHTTP(response, drawDeckReq)
 	checkResponseCode(t, http.StatusBadRequest, response.Code)
@@ -107,10 +105,10 @@ func TestDrawWithoutCardsWithCorrectDeckIdAndCount(t *testing.T) {
 
 	count := 2
 
-	createDeckRes := new(api.CreateDeckResponse)
+	createDeckRes := new(CreateDeckResponse)
 	createDeckReq, _ := http.NewRequest("GET", "/deck/create", nil)
 
-	handler := http.HandlerFunc(api.Create)
+	handler := http.HandlerFunc(Create)
 	response := httptest.NewRecorder()
 	handler.ServeHTTP(response, createDeckReq)
 	checkResponseCode(t, http.StatusOK, response.Code)
@@ -121,14 +119,14 @@ func TestDrawWithoutCardsWithCorrectDeckIdAndCount(t *testing.T) {
 		t.Errorf("Incorrect Response %s\n", str)
 	}
 
-	drawDeckRes := new(api.DrawDeckResponse)
+	drawDeckRes := new(DrawDeckResponse)
 	drawDeckReq, _ := http.NewRequest("GET", "/deck/draw", nil)
 	drawDeckQuery := drawDeckReq.URL.Query()
 	drawDeckQuery.Add("deck_id", createDeckRes.DeckID)
 	drawDeckQuery.Add("count", strconv.Itoa(count))
 	drawDeckReq.URL.RawQuery = drawDeckQuery.Encode()
 
-	handler = http.HandlerFunc(api.Draw)
+	handler = http.HandlerFunc(Draw)
 	response = httptest.NewRecorder()
 	handler.ServeHTTP(response, drawDeckReq)
 	checkResponseCode(t, http.StatusOK, response.Code)
@@ -152,10 +150,10 @@ func TestDrawDeckWithoutCardsWithCorrectDeckIdAndWrongCount(t *testing.T) {
 
 	count := 200
 
-	createDeckRes := new(api.CreateDeckResponse)
+	createDeckRes := new(CreateDeckResponse)
 	createDeckReq, _ := http.NewRequest("GET", "/deck/create", nil)
 
-	handler := http.HandlerFunc(api.Create)
+	handler := http.HandlerFunc(Create)
 	response := httptest.NewRecorder()
 	handler.ServeHTTP(response, createDeckReq)
 	checkResponseCode(t, http.StatusOK, response.Code)
@@ -172,7 +170,7 @@ func TestDrawDeckWithoutCardsWithCorrectDeckIdAndWrongCount(t *testing.T) {
 	drawDeckQuery.Add("count", strconv.Itoa(count))
 	drawDeckReq.URL.RawQuery = drawDeckQuery.Encode()
 
-	handler = http.HandlerFunc(api.Draw)
+	handler = http.HandlerFunc(Draw)
 	response = httptest.NewRecorder()
 	handler.ServeHTTP(response, drawDeckReq)
 	checkResponseCode(t, http.StatusBadRequest, response.Code)
@@ -183,10 +181,10 @@ func TestDrawDeckWithoutCardsWithCorrectDeckIdAndNegativeCount(t *testing.T) {
 
 	count := -2
 
-	createDeckRes := new(api.CreateDeckResponse)
+	createDeckRes := new(CreateDeckResponse)
 	createDeckReq, _ := http.NewRequest("GET", "/deck/create", nil)
 
-	handler := http.HandlerFunc(api.Create)
+	handler := http.HandlerFunc(Create)
 	response := httptest.NewRecorder()
 	handler.ServeHTTP(response, createDeckReq)
 	checkResponseCode(t, http.StatusOK, response.Code)
@@ -203,7 +201,7 @@ func TestDrawDeckWithoutCardsWithCorrectDeckIdAndNegativeCount(t *testing.T) {
 	drawDeckQuery.Add("count", strconv.Itoa(count))
 	drawDeckReq.URL.RawQuery = drawDeckQuery.Encode()
 
-	handler = http.HandlerFunc(api.Draw)
+	handler = http.HandlerFunc(Draw)
 	response = httptest.NewRecorder()
 	handler.ServeHTTP(response, drawDeckReq)
 	checkResponseCode(t, http.StatusBadRequest, response.Code)

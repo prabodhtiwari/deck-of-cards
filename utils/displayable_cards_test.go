@@ -1,15 +1,13 @@
-package unittest
+package utils
 
 import (
 	"testing"
-
-	"github.com/deck-of-cards/utils"
 )
 
 func TestGetDisplayableCards(t *testing.T) {
 
 	cards := []string{"AS", "KH"}
-	res := utils.GetDisplayableCards(cards)
+	res := GetDisplayableCards(cards)
 
 	if res[0].Code != "AS" || res[0].Suit != "SPADES" || res[0].Value != "ACE" {
 		t.Errorf("displayable card response is not matching expected response")

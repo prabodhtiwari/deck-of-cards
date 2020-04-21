@@ -1,17 +1,15 @@
-package unittest
+package utils
 
 import (
 	"testing"
-
-	"github.com/deck-of-cards/utils"
 )
 
 func TestCheckCardValidityWithCorrectCards(t *testing.T) {
 
 	cards := []string{"AS", "2S", "3S", "4S", "5S", "6S", "7S", "8S", "9S", "0S"}
-	res := utils.CheckCardValidity(cards)
+	valid := CheckCardValidity(cards)
 
-	if res != true {
+	if !valid {
 		t.Errorf("correct cards check not passed")
 	}
 
@@ -20,9 +18,9 @@ func TestCheckCardValidityWithCorrectCards(t *testing.T) {
 func TestCheckCardValidityWithDuplicateCorrectCards(t *testing.T) {
 
 	cards := []string{"AS", "2S", "3S", "4S", "5S", "6S", "7S", "8S", "9S", "0S", "0S"}
-	res := utils.CheckCardValidity(cards)
+	valid := CheckCardValidity(cards)
 
-	if res != false {
+	if valid {
 		t.Errorf("correct cards check not passed")
 	}
 
@@ -31,9 +29,9 @@ func TestCheckCardValidityWithDuplicateCorrectCards(t *testing.T) {
 func TestCheckCardValidityWithIncorrectCards(t *testing.T) {
 
 	cards := []string{"AS", "2U", "3S", "4S", "5S", "6S", "7S", "8S", "9S", "0S"}
-	res := utils.CheckCardValidity(cards)
+	valid := CheckCardValidity(cards)
 
-	if res != false {
+	if valid {
 		t.Errorf("Incorrect cards check not passed")
 	}
 

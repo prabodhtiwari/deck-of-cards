@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 
@@ -10,19 +11,12 @@ import (
 )
 
 func main() {
-
 	router := mux.NewRouter()
-	router = initRoutes(router)
+	api.BindRoutes(router)
 	addr := ":3000"
-	log.Println("Server running at ", addr)
+	log.Println("Server running at...", addr)
 	err := http.ListenAndServe(addr, router)
 	if err != nil {
-		log.Println(err)
+		fmt.Println(err)
 	}
-
-}
-
-func initRoutes(router *mux.Router) *mux.Router {
-	api.BindRoutes(router)
-	return router
 }
