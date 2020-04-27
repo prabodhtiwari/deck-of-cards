@@ -5,7 +5,7 @@ An API to simulate a deck of cards
 Install
 -------
 
-From project root run following commands
+From project root's cmd directory run following commands
 
 ```
 go get
